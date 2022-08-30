@@ -1,0 +1,21 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t anooppius/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true anooppius/react-test npm test
+
+after_success:
+  - docker build -t anooppius/multi-container-demo-client ./client
+  - docker build -t anooppius/multi-container-demo-nginx ./nginx
+  - docker build -t anooppius/multi-container-demo-server ./server
+  - docker build -t anooppius/multi-container-demo-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password_stdin
+  - docker push anooppius/multi-container-demo-client
+  - docker push anooppius/multi-container-demo-nginx
+  - docker push anooppius/multi-container-demo-server
+  - docker push anooppius/multi-container-demo-worker
