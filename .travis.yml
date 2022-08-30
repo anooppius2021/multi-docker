@@ -14,7 +14,7 @@ after_success:
   - docker build -t anooppius/multi-container-demo-nginx ./nginx
   - docker build -t anooppius/multi-container-demo-server ./server
   - docker build -t anooppius/multi-container-demo-worker ./worker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password_stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push anooppius/multi-container-demo-client
   - docker push anooppius/multi-container-demo-nginx
   - docker push anooppius/multi-container-demo-server
