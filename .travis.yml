@@ -19,3 +19,15 @@ after_success:
   - docker push anooppius/multi-container-demo-nginx
   - docker push anooppius/multi-container-demo-server
   - docker push anooppius/multi-container-demo-worker
+
+deploy:
+  provider: "elasticbeanstalk"
+  region: "us-east-1"
+  app: "multi-container"
+  env: "Multicontainer-env"
+  bucket_name: "elasticbeanstalk-us-east-1-730471093388"
+  bucket_path: "multi-container"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
